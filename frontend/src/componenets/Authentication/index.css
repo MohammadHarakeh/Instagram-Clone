@@ -15,7 +15,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 50vh;
+  height: auto;
+  padding: 2%;
   width: 30%;
   background-color: #fff;
 }
@@ -44,6 +45,12 @@
   border: 1px solid black;
 }
 
+.signup-wrapper input:focus {
+  border-color: #66afe9; /* Change border color when input is focused */
+  box-shadow: 0 0 5px #66afe9; /* Add box shadow for highlighting */
+  background-color: #f0faff;
+}
+
 .buttons-wrapper button {
   width: 100%;
   border: none;
@@ -52,11 +59,23 @@
   border-radius: 5px;
 }
 
+.buttons-wrapper button:hover {
+  cursor: pointer;
+  background-color: rgb(71, 150, 224);
+}
+
+.switcher p {
+  font-size: 14px;
+}
+
 .switcher {
   display: flex;
   justify-content: center;
 }
 
-.switcher p {
+.error-message {
+  display: flex;
+  justify-content: center;
   font-size: 14px;
+  color: red;
 }

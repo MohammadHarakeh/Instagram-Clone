@@ -1,6 +1,6 @@
 import React from "react";
 
-function SignupForm({ signupData, setSignupData, register }) {
+function SignupForm({ signupData, setSignupData, error, register }) {
   const handleSignup = () => {
     register();
   };
@@ -33,6 +33,10 @@ function SignupForm({ signupData, setSignupData, register }) {
           setSignupData({ ...signupData, confirmPassword: e.target.value });
         }}
       ></input>
+
+      <div className="error-message">
+        <p>{error}</p>
+      </div>
 
       <div className="buttons-wrapper">
         <button onClick={handleSignup}>Signup</button>
