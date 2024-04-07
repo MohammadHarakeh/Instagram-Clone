@@ -12,3 +12,4 @@ Route::post('refresh', [AuthController::class, 'refresh']);
 
 
 Route::get('get-user', [UsersController::class, 'getUser']);
+Route::post('update-user', [UsersController::class, 'updateUser']);
