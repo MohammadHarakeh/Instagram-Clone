@@ -1,0 +1,32 @@
+.header-wrapper {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem 1.5rem;
+  background-color: rgb(227, 227, 227);
+}
+
+.header-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+  color: rgb(69, 69, 69);
+}
+
+.header-right span:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.header-logo {
+  font-size: 24px;
+  margin: 0;
+}
