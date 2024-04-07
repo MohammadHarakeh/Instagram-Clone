@@ -72,13 +72,42 @@ function Authentication() {
     }
   };
 
+  const handleSignin = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/login", {
+        method: "POST",
+        body: JSON.stringify(signinData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("token", JSON.stringify(data.authorisation.token));
+        console.log(data);
+        toast.success("Login successful");
+      } else {
+        console.log("Failed to login");
+        toast.error("Failed to login");
+      }
+    } catch (error) {
+      console.log("Error occured during registration", error);
+      toast.error(error);
+    }
+  };
+
   return (
     <div className="form-wrapper">
       <ToastContainer />
       <div className="form-container">
         <div className="instagram-logo">Instagram</div>
         {isLogin ? (
-          <SigninForm />
+          <SigninForm
+            handleSignin={handleSignin}
+            setSigninData={setSigninData}
+            signinData={signinData}
+          />
         ) : (
           <SignupForm
             signupData={signupData}
