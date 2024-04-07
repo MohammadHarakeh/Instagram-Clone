@@ -16,9 +16,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
   height: auto;
-  padding: 2%;
+  padding: 5%;
   width: 30%;
-  background-color: #fff;
+  background-color: #191919;
+  border-radius: 15px;
+  color: #fff;
 }
 
 .instagram-logo {
@@ -39,33 +41,42 @@
 }
 
 .signup-wrapper input {
-  font-size: 15px;
+  font-size: 20px;
   padding: 3px;
   border-radius: 5px;
   border: 1px solid black;
+  background-color: #353535;
+  color: #fff;
+}
+
+.signup-wrapper input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .signup-wrapper input:focus {
-  border-color: #66afe9; /* Change border color when input is focused */
-  box-shadow: 0 0 5px #66afe9; /* Add box shadow for highlighting */
-  background-color: #f0faff;
+  /* border-color: #66afe9;
+  box-shadow: 0 0 5px #66afe9; */
 }
 
 .buttons-wrapper button {
   width: 100%;
   border: none;
-  background-color: rgb(71, 207, 224);
-  height: 25px;
+  background-color: rgb(95, 143, 231);
+  height: 30px;
   border-radius: 5px;
+  margin-top: 10px;
+  font-size: 20px;
+  color: #fff;
 }
 
 .buttons-wrapper button:hover {
   cursor: pointer;
-  background-color: rgb(71, 150, 224);
+  background-color: rgb(71, 99, 224);
 }
 
 .switcher p {
-  font-size: 14px;
+  margin-top: 10px;
+  font-size: 17px;
 }
 
 .switcher {
@@ -73,9 +84,17 @@
   justify-content: center;
 }
 
-.error-message {
-  display: flex;
-  justify-content: center;
-  font-size: 14px;
-  color: red;
+.button-switcher {
+  cursor: pointer;
+  text-decoration: underline;
+  color: rgb(64, 137, 185);
+}
+
+.Toastify__toast-container .Toastify__toast {
+  background-color: #353535;
+  color: #fff;
+}
+
+.Toastify__close-button {
+  color: rgb(255, 255, 255) !important;
 }

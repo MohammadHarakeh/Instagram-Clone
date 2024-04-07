@@ -8,12 +8,16 @@ import SigninForm from "./Forms/SigninForm";
 
 function Authentication() {
   const [isLogin, setIsLogin] = useState(false);
-  const [error, setError] = useState("");
   const [signupData, setSignupData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
+  });
+
+  const [signinData, setSigninData] = useState({
+    name: "",
+    password: "",
   });
   const navigate = useNavigate();
 
@@ -24,20 +28,19 @@ function Authentication() {
       !signupData.password ||
       !signupData.confirmPassword
     ) {
-      setError("Please fill in all fields");
       toast.error("Please fill in all fields");
       return false;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(signupData.email)) {
-      setError("Please enter a valid email address");
+      toast.error("Please enter a valid email address");
       return false;
     }
     if (signupData.password.length < 6) {
-      setError("Password must be at least 6 characters long");
+      toast.error("Password must be at least 6 characters long");
       return false;
     }
     if (signupData.password !== signupData.confirmPassword) {
-      setError("Passwords do not match");
+      toast.error("Passwords do not match");
       return false;
     }
     return true;
@@ -57,22 +60,22 @@ function Authentication() {
 
       if (response.ok) {
         console.log("User registered successfully");
-        setError("");
         toast.success("User registered successfully");
+        setIsLogin(!isLogin);
       } else {
         console.log("Registration failed");
-        setError("Registration failed");
+        toast.error("Registration failed");
       }
     } catch (error) {
       console.log("Error occurred during registration", error);
-      setError("Error occurred during registration");
+      toast.error("Error occurred during registration");
     }
   };
 
   return (
     <div className="form-wrapper">
+      <ToastContainer />
       <div className="form-container">
-        <ToastContainer />
         <div className="instagram-logo">Instagram</div>
         {isLogin ? (
           <SigninForm />
@@ -80,10 +83,21 @@ function Authentication() {
           <SignupForm
             signupData={signupData}
             setSignupData={setSignupData}
-            error={error}
             register={register}
           />
         )}
+
+        <div className="switcher">
+          <p>
+            {isLogin ? "Don't have an account? " : "Already have an account? "}
+            <span
+              className="button-switcher"
+              onClick={() => setIsLogin(!isLogin)}
+            >
+              {isLogin ? " Sign up" : "Sign in"}
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );
