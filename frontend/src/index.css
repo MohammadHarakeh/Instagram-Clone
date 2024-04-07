@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Fontspring-DEMO-proximanova-black.otf";
+  src: url("../fonts/Fontspring-DEMO-proximanova-black.otf") format("opentype");
+}
+
 * {
   margin: 0;
   padding: 0;

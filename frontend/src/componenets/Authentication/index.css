@@ -27,3 +27,36 @@
   font-family: "Billabong";
   margin-top: 10px;
 }
+
+.signup-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 80%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.signup-wrapper input {
+  font-size: 15px;
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+.buttons-wrapper button {
+  width: 100%;
+  border: none;
+  background-color: rgb(71, 207, 224);
+  height: 25px;
+  border-radius: 5px;
+}
+
+.switcher {
+  display: flex;
+  justify-content: center;
+}
+
+.switcher p {
+  font-size: 14px;
+}
