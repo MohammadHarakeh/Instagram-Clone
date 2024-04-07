@@ -3,6 +3,33 @@ import Header from "../Elements/Header/Header";
 import "./Profile.css";
 import profileImage from "../../assets/profile-picture.jpeg";
 
+const getUserInfo = async () => {
+  try {
+    const response = await fetch("http://127.0.0.1:8000/api/get-user", {
+      method: "GET",
+      // body: JSON.stringify()
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.status !== 200) {
+      throw new Error(`Failed to fetch user data. Status: ${response.status}`);
+    }
+    const data = response.data;
+    if (data) {
+      setUser(data.user);
+      setFirstName(data.user.first_name);
+      setLastName(data.user.last_name);
+      setEmail(data.user.email);
+      setImage(data.user.profile_picture);
+    } else {
+      console.error("Empty response data");
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+  }
+};
+
 function Profile() {
   return (
     <div>
@@ -36,7 +63,13 @@ function Profile() {
           </div>
         </div>
       </div>
-      <div className="personal-posts">test</div>
+      <div className="personal-posts">
+        <img src={profileImage}></img>
+        <img src={profileImage}></img>
+        <img src={profileImage}></img>
+        <img src={profileImage}></img>
+        <img src={profileImage}></img>
+      </div>
     </div>
   );
 }

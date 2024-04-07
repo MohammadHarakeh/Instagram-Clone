@@ -17,6 +17,7 @@
   width: 8rem;
   height: 8rem;
   border-radius: 4rem;
+  margin: 1rem 0;
 }
 
 .profile-name-follow {
@@ -57,4 +58,16 @@
 .profile-bio {
   font-size: 20px;
   padding: 0.5rem;
+}
+
+.personal-posts {
+  display: flex;
+  margin: 1rem 27.8rem;
+  flex-wrap: wrap;
+}
+
+.personal-posts img {
+  width: 30%;
+  height: 30vh;
+  margin: 1rem;
 }
