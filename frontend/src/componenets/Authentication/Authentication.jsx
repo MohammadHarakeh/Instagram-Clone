@@ -46,6 +46,24 @@ function Authentication() {
     return true;
   };
 
+  const validateSigninForm = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!signinData.email && !signinData.password) {
+      toast.error("please fill in both fields");
+      return false;
+    } else if (!signinData.email) {
+      toast.error("please enter your email");
+      return false;
+    } else if (!emailRegex.test(signinData.email)) {
+      toast.error("Please enter a valid email address");
+      return false;
+    } else if (!signinData.password) {
+      toast.error("please enter your password");
+      return false;
+    }
+    return true;
+  };
+
   const register = async () => {
     if (!validateForm()) return;
 
@@ -73,6 +91,8 @@ function Authentication() {
   };
 
   const handleSignin = async () => {
+    if (!validateSigninForm()) return;
+
     try {
       const response = await fetch("http://127.0.0.1:8000/api/login", {
         method: "POST",
