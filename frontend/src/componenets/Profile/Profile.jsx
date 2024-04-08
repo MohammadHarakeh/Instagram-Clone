@@ -4,9 +4,10 @@ import "./Profile.css";
 import profileImage from "../../assets/profile-picture.jpeg";
 
 function Profile() {
-  const [userInfo, setUserInfo] = useState(null);
-  const [followers, setFollowers] = useState(null);
-  const [following, setFollowing] = useState(null);
+  const [userInfo, setUserInfo] = useState("");
+  const [followers, setFollowers] = useState("");
+  const [following, setFollowing] = useState("");
+  const [postsCount, setPostsCount] = useState("");
 
   const getUserInfo = async () => {
     try {
@@ -87,10 +88,33 @@ function Profile() {
     }
   };
 
+  const getPostCount = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/posts/count", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        },
+      });
+      if (!response.ok) {
+        throw new error(
+          `Failed to fetch posts count. Status: ${response.status}`
+        );
+      }
+      const data = await response.json();
+      setPostsCount(data.post_count);
+      console.log("posts count:", data.post_count);
+    } catch (error) {
+      console.log("Error fetching data:", error.message);
+    }
+  };
+
   useEffect(() => {
     getUserInfo();
     getUserfollowers();
     getUserFollowing();
+    getPostCount();
   }, []);
 
   return (
@@ -110,7 +134,7 @@ function Profile() {
 
           <div className="personal-counters">
             <p>
-              <b>10</b> posts
+              <b>{postsCount}</b> posts
             </p>
             <p>
               <b>{followers}</b> followers

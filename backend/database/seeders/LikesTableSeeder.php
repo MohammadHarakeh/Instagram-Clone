@@ -14,5 +14,30 @@ class LikesTableSeeder extends Seeder
             'post_id' => 1,
         ]);
 
+        Like::create([
+            'user_id' => 2,
+            'post_id' => 1,
+        ]);
+
+        Like::create([
+            'user_id' => 3,
+            'post_id' => 1,
+        ]);
+
+        Like::create([
+            'user_id' => 4,
+            'post_id' => 1,
+        ]);
+
+        Like::create([
+            'user_id' => 1,
+            'post_id' => 2,
+        ]);
+
+        Like::create([
+            'user_id' => 1,
+            'post_id' => 3,
+        ]);
+
     }
 }

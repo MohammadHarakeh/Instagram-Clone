@@ -45,12 +45,12 @@ class FollowController extends Controller
         $followersCount = $user->followers()->count();
         return response()->json(['followers_count' => $followersCount]);
     }
-
-
+    
     public function followingCount()
     {
         $user = auth()->user();
         $followingCount = $user->following()->count();
         return response()->json(['following_count' => $followingCount]);
     }
+
 }
