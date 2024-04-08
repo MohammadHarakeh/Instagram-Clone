@@ -1,36 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Elements/Header/Header";
 import "./Profile.css";
 import profileImage from "../../assets/profile-picture.jpeg";
 
-const getUserInfo = async () => {
-  try {
-    const response = await fetch("http://127.0.0.1:8000/api/get-user", {
-      method: "GET",
-      // body: JSON.stringify()
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.status !== 200) {
-      throw new Error(`Failed to fetch user data. Status: ${response.status}`);
-    }
-    const data = response.data;
-    if (data) {
-      setUser(data.user);
-      setFirstName(data.user.first_name);
-      setLastName(data.user.last_name);
-      setEmail(data.user.email);
-      setImage(data.user.profile_picture);
-    } else {
-      console.error("Empty response data");
-    }
-  } catch (error) {
-    console.error("Error fetching data:", error.message);
-  }
-};
-
 function Profile() {
+  const [userInfo, setUserInfo] = useState(null);
+
+  const getUserInfo = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/get-user", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+          Accept: "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch user data. Status: ${response.status}`
+        );
+      }
+      const data = await response.json();
+      setUserInfo(data.user);
+      console.log(data.user);
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
   return (
     <div>
       <Header></Header>
@@ -42,7 +44,7 @@ function Profile() {
 
         <div className="profile-container">
           <div className="profile-name-follow">
-            <p>name</p>
+            <p>{userInfo ? userInfo.name : "Loading..."}</p>
             <button>Edit Profile</button>
           </div>
 

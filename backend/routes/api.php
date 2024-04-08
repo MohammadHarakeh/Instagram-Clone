@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\FollowController;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
@@ -13,3 +14,8 @@ Route::post('refresh', [AuthController::class, 'refresh']);
 
 Route::get('get-user', [UsersController::class, 'getUser']);
 Route::post('update-user', [UsersController::class, 'updateUser']);
+
+Route::post('/follow/{userId}', [FollowController::class, 'follow'])->name('follow');
+Route::delete('/unfollow/{userId}', [FollowController::class, 'unfollow'])->name('unfollow');
+Route::get('/followers/count', [FollowController::class, 'followersCount'])->name('followers.count');
+Route::get('/following/count', [FollowController::class, 'followingCount'])->name('following.count');
