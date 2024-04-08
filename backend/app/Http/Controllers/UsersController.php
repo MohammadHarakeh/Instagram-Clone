@@ -59,6 +59,10 @@ class UsersController extends Controller
                 $user->email = $request->input('email');
             }
 
+            if ($request->filled('bio')) {
+                $user->bio = $request->input('bio');
+            }
+
             $user->save();
         
             return response()->json([

@@ -1,7 +1,7 @@
 .header-wrapper {
   display: flex;
   justify-content: space-around;
-  padding: 1rem 1.5rem;
+  padding: 1.5rem 7rem;
   background-color: rgb(227, 227, 227);
 }
 
@@ -10,6 +10,13 @@
   justify-content: center;
   align-items: center;
   gap: 15px;
+  font-size: 40px;
+}
+
+.header-left p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .header-right {
@@ -17,7 +24,7 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-  font-size: 24px;
+  font-size: 40px;
   color: rgb(69, 69, 69);
 }
 
@@ -27,6 +34,6 @@
 }
 
 .header-logo {
-  font-size: 24px;
+  font-size: 40px;
   margin: 0;
 }

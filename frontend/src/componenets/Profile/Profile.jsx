@@ -4,10 +4,20 @@ import "./Profile.css";
 import profileImage from "../../assets/profile-picture.jpeg";
 
 function Profile() {
-  const [userInfo, setUserInfo] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    email: "",
+    bio: "",
+    profilePicture: "",
+  });
   const [followers, setFollowers] = useState("");
   const [following, setFollowing] = useState("");
   const [postsCount, setPostsCount] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [image, setImage] = useState();
+  const [imageData, setImageData] = useState();
+
+  const { name, email, bio } = userInfo;
 
   const getUserInfo = async () => {
     try {
@@ -110,6 +120,51 @@ function Profile() {
     }
   };
 
+  const updateUserInfo = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("bio", bio);
+      formData.append("profile_picture", imageData);
+
+      const response = await fetch("http://127.0.0.1:8000/api/update-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        },
+        body: formData,
+      });
+      if (!response.ok) {
+        console.log("Failed to update user:", response.data.message);
+      }
+      console.log("User updated successfully");
+      getUserInfo();
+      setIsEditing(false);
+    } catch (error) {
+      console.log("Error updating user:", error.message);
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImageData(file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setImage(reader.result);
+    };
+  };
+
+  function editUser() {
+    setIsEditing(true);
+  }
+
+  function closeEditUser() {
+    setIsEditing(false);
+  }
+
   useEffect(() => {
     getUserInfo();
     getUserfollowers();
@@ -122,6 +177,46 @@ function Profile() {
       <Header></Header>
 
       <div className="profile-wrapper">
+        {isEditing && <div className="blurred"></div>}
+        {isEditing && (
+          <div className="is-editing">
+            {image && <img src={`${image}`} alt="User" />}
+            <label htmlFor="choose-image" className="choose-image-label">
+              Choose Image
+            </label>
+            <input
+              className="image-input"
+              id="choose-image"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+            <input
+              placeholder="Name"
+              value={name}
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, name: e.target.value })
+              }
+            />
+            <input
+              placeholder="Email"
+              value={email}
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, email: e.target.value })
+              }
+            />
+            <input
+              placeholder="Bio"
+              value={bio}
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, bio: e.target.value })
+              }
+            />
+            <button onClick={updateUserInfo}>Save Changes</button>
+            <button onClick={closeEditUser}>Cancel</button>
+          </div>
+        )}
+
         <div className="profile-image">
           <img src={profileImage}></img>
         </div>
@@ -129,7 +224,7 @@ function Profile() {
         <div className="profile-container">
           <div className="profile-name-follow">
             <p>{userInfo ? userInfo.name : "Loading..."}</p>
-            <button>Edit Profile</button>
+            <button onClick={editUser}>Edit Profile</button>
           </div>
 
           <div className="personal-counters">
