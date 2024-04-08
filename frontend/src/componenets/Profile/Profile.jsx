@@ -5,6 +5,8 @@ import profileImage from "../../assets/profile-picture.jpeg";
 
 function Profile() {
   const [userInfo, setUserInfo] = useState(null);
+  const [followers, setFollowers] = useState(null);
+  const [following, setFollowing] = useState(null);
 
   const getUserInfo = async () => {
     try {
@@ -29,8 +31,66 @@ function Profile() {
     }
   };
 
+  const getUserfollowers = async () => {
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/followers/count",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new error(
+          `Failed to fetch user data. Status: ${response.status}`
+        );
+      }
+      const data = await response.json();
+      setFollowers(data.followers_count);
+      console.log("followers count", data.followers_count);
+    } catch (error) {
+      console.log("Error fetching data:", error.message);
+    }
+  };
+
+  const getUserFollowing = async () => {
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/following/count",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )},`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new error(
+          `Failed to fetch user data. Status: ${response.status}`
+        );
+      }
+      const data = await response.json();
+      setFollowing(data.following_count);
+      console.log("following count: ", data.following_count);
+    } catch (error) {
+      console.log("Error fetching data:", error.message);
+    }
+  };
+
   useEffect(() => {
     getUserInfo();
+    getUserfollowers();
+    getUserFollowing();
   }, []);
 
   return (
@@ -53,10 +113,10 @@ function Profile() {
               <b>10</b> posts
             </p>
             <p>
-              <b>500</b> followers
+              <b>{followers}</b> followers
             </p>
             <p>
-              <b>32</b> following
+              <b>{following}</b> following
             </p>
           </div>
 
