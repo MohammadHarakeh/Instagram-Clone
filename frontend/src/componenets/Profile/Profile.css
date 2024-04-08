@@ -94,7 +94,19 @@
   padding: 2rem;
   width: 40%;
   height: auto;
+  gap: 20px;
   z-index: 2;
+}
+
+.is-editing input,
+textarea {
+  width: 50%;
+  font-size: 24px;
+  padding-left: 1%;
+}
+
+.is-editing textarea {
+  height: 15vh;
 }
 
 .is-editing img {
@@ -103,6 +115,37 @@
   border-radius: 100px;
 }
 
+.button-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.button-wrapper button {
+  background-color: #0095f6;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  width: 45%;
+  padding: 3%;
+  font-size: 20px;
+  border-radius: 5px;
+}
+
 .image-input {
   display: none;
+}
+
+.choose-image-label {
+  display: flex;
+  justify-content: center;
+  padding: 2%;
+  background-color: #0095f6;
+  border-radius: 5px;
+  width: 10rem;
+  font-size: 20px;
+}
+
+.choose-image-label:hover {
+  cursor: pointer;
 }

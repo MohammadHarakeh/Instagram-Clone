@@ -4,20 +4,16 @@ import "./Profile.css";
 import profileImage from "../../assets/profile-picture.jpeg";
 
 function Profile() {
-  const [userInfo, setUserInfo] = useState({
-    name: "",
-    email: "",
-    bio: "",
-    profilePicture: "",
-  });
+  const [userInfo, setUserInfo] = useState({});
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [bio, setBio] = useState("");
   const [followers, setFollowers] = useState("");
   const [following, setFollowing] = useState("");
   const [postsCount, setPostsCount] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [image, setImage] = useState();
   const [imageData, setImageData] = useState();
-
-  const { name, email, bio } = userInfo;
 
   const getUserInfo = async () => {
     try {
@@ -26,7 +22,6 @@ function Profile() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-          Accept: "application/json",
         },
       });
       if (!response.ok) {
@@ -36,6 +31,9 @@ function Profile() {
       }
       const data = await response.json();
       setUserInfo(data.user);
+      setName(data.user.name);
+      setEmail(data.user.email);
+      setBio(data.user.bio);
       console.log(data.user);
     } catch (error) {
       console.error("Error fetching data:", error.message);
@@ -64,7 +62,6 @@ function Profile() {
       }
       const data = await response.json();
       setFollowers(data.followers_count);
-      console.log("followers count", data.followers_count);
     } catch (error) {
       console.log("Error fetching data:", error.message);
     }
@@ -92,7 +89,6 @@ function Profile() {
       }
       const data = await response.json();
       setFollowing(data.following_count);
-      console.log("following count: ", data.following_count);
     } catch (error) {
       console.log("Error fetching data:", error.message);
     }
@@ -114,7 +110,6 @@ function Profile() {
       }
       const data = await response.json();
       setPostsCount(data.post_count);
-      console.log("posts count:", data.post_count);
     } catch (error) {
       console.log("Error fetching data:", error.message);
     }
@@ -126,20 +121,24 @@ function Profile() {
       formData.append("name", name);
       formData.append("email", email);
       formData.append("bio", bio);
-      formData.append("profile_picture", imageData);
+      // formData.append("profile_picture", imageData);
 
       const response = await fetch("http://127.0.0.1:8000/api/update-user", {
         method: "POST",
         headers: {
-          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+          // "Content-Type": "application/json",
         },
         body: formData,
       });
+
       if (!response.ok) {
-        console.log("Failed to update user:", response.data.message);
+        throw new Error(`Failed to update user. Status: ${response.status}`);
       }
-      console.log("User updated successfully");
+
+      const responseData = await response.json();
+      console.log("User updated successfully", responseData);
+      setUserInfo(responseData.user);
       getUserInfo();
       setIsEditing(false);
     } catch (error) {
@@ -194,31 +193,27 @@ function Profile() {
             <input
               placeholder="Name"
               value={name}
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, name: e.target.value })
-              }
+              onChange={(e) => setName(e.target.value)}
             />
             <input
               placeholder="Email"
               value={email}
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, email: e.target.value })
-              }
+              onChange={(e) => setEmail(e.target.value)}
             />
-            <input
+            <textarea
               placeholder="Bio"
               value={bio}
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, bio: e.target.value })
-              }
+              onChange={(e) => setBio(e.target.value)}
             />
-            <button onClick={updateUserInfo}>Save Changes</button>
-            <button onClick={closeEditUser}>Cancel</button>
+            <div className="button-wrapper">
+              <button onClick={updateUserInfo}>Save Changes</button>
+              <button onClick={closeEditUser}>Cancel</button>
+            </div>
           </div>
         )}
 
         <div className="profile-image">
-          <img src={profileImage}></img>
+          <img src={`http://127.0.0.1:8000/profile_pictures/` + image}></img>
         </div>
 
         <div className="profile-container">
@@ -240,7 +235,7 @@ function Profile() {
           </div>
 
           <div className="profile-bio">
-            <p>Enter your bio here</p>
+            <p>{bio}</p>
           </div>
         </div>
       </div>

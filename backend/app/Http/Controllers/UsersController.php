@@ -26,6 +26,14 @@ class UsersController extends Controller
     
 
     public function updateUser(Request $request){
+
+        $request->validate([
+            'profile_picture' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name' => 'string',
+            'bio' => 'string',
+            'email' => 'string|email',
+        ]);
+
         if(!auth()->check()){
             return response()->json(['message'=>'Unauthorized'], 401);
         }
