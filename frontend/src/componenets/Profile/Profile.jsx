@@ -181,12 +181,7 @@ function Profile() {
         {isEditing && <div className="blurred"></div>}
         {isEditing && (
           <div className="is-editing">
-            {image && (
-              <img
-                src={`http://127.0.0.1:8000/profile_pictures/` + image}
-                alt="User"
-              />
-            )}
+            {image && <img src={`${image}`} alt="User" />}
             <label htmlFor="choose-image" className="choose-image-label">
               Choose Image
             </label>
@@ -221,7 +216,7 @@ function Profile() {
 
         <div className="profile-image">
           <img
-            src={`http://127.0.0.1:8000/profile_pictures/` + image}
+            src={`http://127.0.0.1:8000/profile_pictures/${image}`}
             alt="user-profile"
           ></img>
         </div>

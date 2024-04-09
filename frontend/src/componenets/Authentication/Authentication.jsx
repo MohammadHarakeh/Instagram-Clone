@@ -124,16 +124,16 @@ function Authentication() {
       <div className="form-container">
         <div className="instagram-logo">Instagram</div>
         {isLogin ? (
-          <SigninForm
-            handleSignin={handleSignin}
-            setSigninData={setSigninData}
-            signinData={signinData}
-          />
-        ) : (
           <SignupForm
             signupData={signupData}
             setSignupData={setSignupData}
             register={register}
+          />
+        ) : (
+          <SigninForm
+            handleSignin={handleSignin}
+            setSigninData={setSigninData}
+            signinData={signinData}
           />
         )}
 

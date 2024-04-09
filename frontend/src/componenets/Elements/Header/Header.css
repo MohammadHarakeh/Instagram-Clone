@@ -12,6 +12,7 @@
   align-items: center;
   gap: 15px;
   font-size: 40px;
+  color: #fff;
 }
 
 .header-left p {
@@ -35,6 +36,11 @@
 }
 
 .header-logo {
+  cursor: pointer;
   font-size: 40px;
   margin: 0;
+}
+
+.header-insta-logo {
+  cursor: pointer;
 }
