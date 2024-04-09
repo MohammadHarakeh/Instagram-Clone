@@ -107,7 +107,7 @@ function Authentication() {
         localStorage.setItem("token", JSON.stringify(data.authorisation.token));
         console.log(data);
         toast.success("Login successful");
-        navigate("/profile");
+        navigate("/homepage");
       } else {
         console.log("Failed to login");
         toast.error("Failed to login");

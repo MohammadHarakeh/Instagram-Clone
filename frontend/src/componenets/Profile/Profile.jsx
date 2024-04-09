@@ -13,8 +13,8 @@ function Profile() {
   const [following, setFollowing] = useState("");
   const [postsCount, setPostsCount] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [image, setImage] = useState(null);
-  const [imageData, setImageData] = useState(null);
+  const [image, setImage] = useState();
+  const [imageData, setImageData] = useState();
 
   const getUserInfo = async () => {
     try {
@@ -129,6 +129,7 @@ function Profile() {
         method: "POST",
         headers: {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+          // "Content-Type": "multipart/form-data"
         },
         body: formData,
       });

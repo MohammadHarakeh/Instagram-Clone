@@ -14,13 +14,14 @@ Route::post('refresh', [AuthController::class, 'refresh']);
 
 
 Route::get('get-user', [UsersController::class, 'getUser']);
+Route::get('get-all-users', [UsersController::class, 'getAllUsers']);
 Route::post('update-user', [UsersController::class, 'updateUser']);
 
 
-Route::post('/follow/{userId}', [FollowController::class, 'follow']);
-Route::delete('/unfollow/{userId}', [FollowController::class, 'unfollow']);
 Route::get('/followers/count', [FollowController::class, 'followersCount']);
 Route::get('/following/count', [FollowController::class, 'followingCount']);
+Route::post('/follow/{userId}', [FollowController::class, 'follow']);
+Route::delete('/unfollow/{userId}', [FollowController::class, 'unfollow']);
 
 
 Route::get('/posts/count', [PostController::class, 'postCount']);

@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../Elements/Header/Header";
 import "./Homepage.css";
 import Posts from "./Posts/Posts";
+import Suggested from "./SuggestedUsers/Suggested";
 
 function Homepage() {
   return (
@@ -10,6 +11,7 @@ function Homepage() {
 
       <div>
         <Posts />
+        <Suggested />
       </div>
     </div>
   );
