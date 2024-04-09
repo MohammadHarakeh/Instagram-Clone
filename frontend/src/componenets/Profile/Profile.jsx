@@ -12,8 +12,8 @@ function Profile() {
   const [following, setFollowing] = useState("");
   const [postsCount, setPostsCount] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [image, setImage] = useState();
-  const [imageData, setImageData] = useState();
+  const [image, setImage] = useState(null);
+  const [imageData, setImageData] = useState(null);
 
   const getUserInfo = async () => {
     try {
@@ -34,6 +34,7 @@ function Profile() {
       setName(data.user.name);
       setEmail(data.user.email);
       setBio(data.user.bio);
+      setImage(data.user.profile_picture);
       console.log(data.user);
     } catch (error) {
       console.error("Error fetching data:", error.message);
@@ -121,13 +122,12 @@ function Profile() {
       formData.append("name", name);
       formData.append("email", email);
       formData.append("bio", bio);
-      // formData.append("profile_picture", imageData);
+      formData.append("profile_picture", imageData);
 
       const response = await fetch("http://127.0.0.1:8000/api/update-user", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-          // "Content-Type": "application/json",
         },
         body: formData,
       });
@@ -213,7 +213,10 @@ function Profile() {
         )}
 
         <div className="profile-image">
-          <img src={`http://127.0.0.1:8000/profile_pictures/` + image}></img>
+          <img
+            src={`http://127.0.0.1:8000/profile_pictures/` + image}
+            alt="user-profile"
+          ></img>
         </div>
 
         <div className="profile-container">
