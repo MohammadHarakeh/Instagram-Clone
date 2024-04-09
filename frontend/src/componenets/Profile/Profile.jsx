@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../Elements/Header/Header";
 import "./Profile.css";
 import profileImage from "../../assets/profile-picture.jpeg";
+import { ToastContainer, toast } from "react-toastify";
 
 function Profile() {
   const [userInfo, setUserInfo] = useState({});
@@ -137,9 +138,9 @@ function Profile() {
       }
 
       const responseData = await response.json();
-      console.log("User updated successfully", responseData);
       setUserInfo(responseData.user);
       getUserInfo();
+      toast.success("Updated successfully.");
       setIsEditing(false);
     } catch (error) {
       console.log("Error updating user:", error.message);
@@ -172,14 +173,20 @@ function Profile() {
   }, []);
 
   return (
-    <div>
+    <div className="main-wrapper">
       <Header></Header>
+      <ToastContainer />
 
       <div className="profile-wrapper">
         {isEditing && <div className="blurred"></div>}
         {isEditing && (
           <div className="is-editing">
-            {image && <img src={`${image}`} alt="User" />}
+            {image && (
+              <img
+                src={`http://127.0.0.1:8000/profile_pictures/` + image}
+                alt="User"
+              />
+            )}
             <label htmlFor="choose-image" className="choose-image-label">
               Choose Image
             </label>
