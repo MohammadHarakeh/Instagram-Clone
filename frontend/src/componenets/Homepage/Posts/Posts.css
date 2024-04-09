@@ -7,7 +7,8 @@
 }
 
 .posts-card {
-  border-bottom: 5px solid grey;
+  height: auto;
+  border-bottom: 2px solid grey;
   margin-bottom: 2%;
 }
 
@@ -22,5 +23,50 @@
 .user-post-info img {
   width: 50px;
   height: 50px;
+  border: 2px solid #fff;
   border-radius: 25px;
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-interaction-section {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 15px;
+}
+
+.post-container img {
+  border-radius: 1px solid black;
+  border-radius: 5px;
+  width: 35rem;
+  height: 40rem;
+}
+
+.interaction-btn {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 40px;
+}
+
+.post-likes-caption {
+  font-size: 18px;
+}
+
+.comment-section {
+  margin-bottom: 1rem;
+}
+
+.comment-section textarea {
+  background-color: black;
+  color: #fff;
+  margin-top: 1rem;
+  width: 100%;
+  border: none;
+  height: 100px;
+  overflow: auto;
+  resize: none;
 }
