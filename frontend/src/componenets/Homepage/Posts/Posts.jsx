@@ -38,7 +38,7 @@ function Posts({
             Choose Image
           </label>
         </div>
-        <button type="submit" onClick={createPost}>
+        <button type="submit" className="submit-post-btn" onClick={createPost}>
           Post
         </button>
 
