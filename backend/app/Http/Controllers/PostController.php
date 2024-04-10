@@ -48,9 +48,14 @@ class PostController extends Controller
         $followedUserIds = Follow::where('follower_id', $loggedInUserId)->pluck('following_id');
     
         $posts = Post::whereIn('user_id', $followedUserIds)
-            ->with(['user', 'likes'])
-            ->orderBy('created_at', 'desc')
-            ->get();
+        ->with(['user', 'likes'])
+        ->orderBy('created_at', 'desc')
+        ->get();
+    
+    $posts->each(function ($post) use ($loggedInUserId) {
+        $post->liked_by_user = $post->likes->contains('user_id', $loggedInUserId);
+    });
+    
     
         return response()->json(['posts' => $posts], 200);
     }
