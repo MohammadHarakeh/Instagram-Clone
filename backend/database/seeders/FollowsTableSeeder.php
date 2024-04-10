@@ -35,5 +35,24 @@ class FollowsTableSeeder extends Seeder
             'following_id' => 3,
         ]);
 
+        Follow::create([
+            'follower_id' => 3,
+            'following_id' => 1,
+        ]);
+
+        Follow::create([
+            'follower_id' => 3,
+            'following_id' => 2,
+        ]);
+
+        Follow::create([
+            'follower_id' => 3,
+            'following_id' => 4,
+        ]);
+
+        Follow::create([
+            'follower_id' => 3,
+            'following_id' => 5,
+        ]);
     }
 }

@@ -30,7 +30,6 @@ class LikesController extends Controller
 
     public function getPostLikes($postId)
     {
-        $user = auth()->user();
         $post = Post::findOrFail($postId);
 
         $likeCount = $post->likes()->count();

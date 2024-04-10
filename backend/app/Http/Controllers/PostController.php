@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Follow;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -41,10 +43,18 @@ class PostController extends Controller
 
     public function getAllPosts()
     {
-        $posts = Post::with(['user','likes'])->orderBy('created_at', 'desc')->get();
-
-        return response()->json(['posts'=>$posts], 200);
+        $loggedInUserId = auth()->id();
+    
+        $followedUserIds = Follow::where('follower_id', $loggedInUserId)->pluck('following_id');
+    
+        $posts = Post::whereIn('user_id', $followedUserIds)
+            ->with(['user', 'likes'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+    
+        return response()->json(['posts' => $posts], 200);
     }
+    
 
 
     public function deletePost($id)

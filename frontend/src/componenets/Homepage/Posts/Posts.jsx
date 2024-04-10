@@ -4,7 +4,7 @@ import UserProfile from "../../../assets/profile-picture.jpeg";
 import { CiHeart } from "react-icons/ci";
 import { FaRegComment, FaHeart } from "react-icons/fa";
 
-function Posts({ posts, toggleLike, handleToggleLike }) {
+function Posts({ posts, handleToggleLike }) {
   return (
     <div className="posts-wrapper">
       {posts &&
@@ -26,12 +26,21 @@ function Posts({ posts, toggleLike, handleToggleLike }) {
                 alt={`Photo ${post.id + 1}`}
               />
               <div className="user-interaction-section">
-                <CiHeart
-                  className="interaction-btn"
-                  onClick={() => {
-                    handleToggleLike(post.id);
-                  }}
-                />
+                {post.isLiked ? (
+                  <FaHeart
+                    className="interaction-btn"
+                    onClick={() => {
+                      handleToggleLike(post.id);
+                    }}
+                  />
+                ) : (
+                  <CiHeart
+                    className="interaction-btn"
+                    onClick={() => {
+                      handleToggleLike(post.id);
+                    }}
+                  />
+                )}
                 <FaRegComment className="interaction-btn" />
               </div>
               <div className="post-likes-caption">
