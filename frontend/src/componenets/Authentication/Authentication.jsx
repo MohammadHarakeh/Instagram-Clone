@@ -121,7 +121,7 @@ function Authentication() {
 
   return (
     <div className="form-wrapper">
-      <ToastContainer />
+      <ToastContainer theme="dark" />
       <div className="form-container">
         <div className="instagram-logo">Instagram</div>
         {isLogin ? (

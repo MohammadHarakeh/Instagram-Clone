@@ -7,6 +7,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LikesController;
+use App\Http\Controllers\CommentsController;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
@@ -33,3 +34,6 @@ Route::delete('/posts/delete/{id}', [PostController::class, 'deletePost']);
 
 Route::post('/toggleLike/post/{postId}', [LikesController::class, 'toggleLike']);
 Route::get('/like/count/{postId}', [LikesController::class, 'getPostLikes']);
+
+
+Route::post('/add/comment/{postId}', [CommentsController::class, 'addComment']);

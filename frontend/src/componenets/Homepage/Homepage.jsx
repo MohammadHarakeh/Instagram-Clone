@@ -131,7 +131,7 @@ function Homepage() {
 
   return (
     <div className="homepage-wrapper">
-      <ToastContainer />
+      <ToastContainer theme="dark" />
       {isEditing && <div className="blurred"></div>}
       {isEditing && (
         <div className="is-editing">
