@@ -59,8 +59,11 @@ class UsersController extends Controller
             $filename = time() . '.' . $extension;
             $file->move(public_path('/profile_pictures/'), $filename);
     
-            if (File::exists(public_path('/profile_pictures/') . $user->profile_picture)) {
-                File::delete((public_path('/profile_pictures/') . $user->profile_picture));
+            if ($user->profile_picture && $user->profile_picture !== 'defaultProfile.png') {
+                $previousImagePath = public_path('/profile_pictures/') . $user->profile_picture;
+                if (File::exists($previousImagePath)) {
+                    File::delete($previousImagePath);
+                }
             }
     
             $user->profile_picture = $filename;

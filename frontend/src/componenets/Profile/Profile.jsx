@@ -127,7 +127,6 @@ function Profile() {
         method: "POST",
         headers: {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-          // "Content-Type": "multipart/form-data"
         },
         body: formData,
       });

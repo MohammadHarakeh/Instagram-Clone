@@ -87,6 +87,35 @@ function Homepage() {
     }
   };
 
+  const toggleLike = async (postId) => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/toggleLike/post/${postId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        console.log(`Failed to fetch posts count. Status: ${response.status}`);
+      }
+
+      getAllPosts();
+    } catch (error) {
+      console.log("Error fetching data:", error.message);
+    }
+  };
+
+  const handleToggleLike = (postId) => {
+    toggleLike(postId);
+  };
+
   function editUser() {
     setIsEditing(true);
   }
@@ -129,6 +158,8 @@ function Homepage() {
             imagePreview={imagePreview}
             setImagePreview={setImagePreview}
             posts={posts}
+            toggleLike={toggleLike}
+            handleToggleLike={handleToggleLike}
           />
         )}
         <Suggested />
