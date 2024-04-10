@@ -25,3 +25,6 @@ Route::delete('/unfollow/{userId}', [FollowController::class, 'unfollow']);
 
 
 Route::get('/posts/count', [PostController::class, 'postCount']);
+Route::get('/posts/getAll', [PostController::class, 'getAllPosts']);
+Route::post('/posts/create', [PostController::class, 'createPost']);
+Route::delete('/posts/delete/{id}', [PostController::class, 'deletePost']);

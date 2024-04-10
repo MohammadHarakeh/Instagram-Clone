@@ -7,9 +7,47 @@ import UserProfile from "../../../assets/profile-picture.jpeg";
 import { CiHeart } from "react-icons/ci";
 import { FaRegComment } from "react-icons/fa";
 
-function Posts() {
+function Posts({
+  caption,
+  handleCaptionChange,
+  handleImageChange,
+  createPost,
+  imagePreview,
+}) {
   return (
     <div className="posts-wrapper">
+      <div className="create-post-form">
+        <div className="post-inputs">
+          <input
+            type="file"
+            onChange={handleImageChange}
+            id="imageInput"
+            accept="image/*"
+            className="post-image-input"
+            required
+          />
+
+          <textarea
+            placeholder="Write a caption..."
+            value={caption}
+            onChange={handleCaptionChange}
+            required
+          ></textarea>
+
+          <label htmlFor="imageInput" className="image-input-label">
+            Choose Image
+          </label>
+        </div>
+        <button type="submit" onClick={createPost}>
+          Post
+        </button>
+
+        {imagePreview && (
+          <div className="image-preview">
+            <img src={imagePreview} alt="preview"></img>
+          </div>
+        )}
+      </div>
       <div className="posts-card">
         <div className="user-post-info">
           <img src={UserProfile}></img>

@@ -70,3 +70,36 @@
   overflow: auto;
   resize: none;
 }
+
+.image-preview img {
+  width: 35rem;
+  height: 40rem;
+}
+
+.post-image-input {
+  display: none;
+}
+
+.image-input-label {
+  display: flex;
+  justify-content: center;
+  width: 7rem;
+  cursor: pointer;
+  background-color: blue;
+  padding: 0.5rem;
+}
+
+.post-inputs {
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-inputs textarea {
+  resize: none;
+  flex: 1;
+}
+
+.create-post-form {
+  width: 35rem;
+  margin-top: 1rem;
+}
