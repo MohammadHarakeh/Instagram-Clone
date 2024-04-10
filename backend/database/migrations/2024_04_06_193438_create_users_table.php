@@ -17,7 +17,7 @@ return new class extends Migration
             $req->string('email')->unique();
             $req->string('password');
             $req->text('bio')->default("");
-            $req->string('profile_picture')->nullable();
+            $req->string('profile_picture')->default("defaultProfile.png");
             $req->timestamps();
         });
     }

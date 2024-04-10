@@ -15,6 +15,16 @@ function Homepage() {
 
   const createPost = async () => {
     try {
+      if (!caption.trim()) {
+        toast.error("Caption cannot be empty.");
+        return;
+      }
+
+      if (!image) {
+        toast.error("Please select an image.");
+        return;
+      }
+
       const formData = new FormData();
       formData.append("image", image);
       formData.append("caption", caption);
