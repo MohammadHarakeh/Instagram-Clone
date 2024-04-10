@@ -26,9 +26,7 @@ function Profile() {
         },
       });
       if (!response.ok) {
-        throw new Error(
-          `Failed to fetch user data. Status: ${response.status}`
-        );
+        console.log(`Failed to fetch user data. Status: ${response.status}`);
       }
       const data = await response.json();
       setUserInfo(data.user);

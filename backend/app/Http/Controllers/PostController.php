@@ -28,10 +28,11 @@ class PostController extends Controller
         $imageName = time() . '.' . $image->getClientOriginalExtension();
         $image->move(public_path('post_images'), $imageName);
 
-        $post = new Post();
-        $post->user_id = $user->id;
-        $post->image = $imageName;
-        $post->caption = $request->caption;
+        $post = Post::create([
+            'user_id' => $user->id,
+            'image' => $imageName,
+            'caption' => $request->caption,
+        ]);
         $post->save();
 
         return response()->json(['message' => 'Post created successfully', 'post' => $post], 201);
@@ -40,7 +41,7 @@ class PostController extends Controller
 
     public function getAllPosts()
     {
-        $posts = Post::all();
+        $posts = Post::with('user')->orderBy('created_at', 'desc')->get();
 
         return response()->json(['posts'=>$posts], 200);
     }
