@@ -3,12 +3,15 @@ import Header from "../Elements/Header/Header";
 import "./Homepage.css";
 import Posts from "./Posts/Posts";
 import Suggested from "./SuggestedUsers/Suggested";
+import CreatePosts from "../Elements/CreatePosts/CreatePosts";
+import { ToastContainer, toast } from "react-toastify";
 
 function Homepage() {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState();
   const [imagePreview, setImagePreview] = useState();
   const [posts, setPosts] = useState();
+  const [isEditing, setIsEditing] = useState(false);
 
   const createPost = async () => {
     try {
@@ -29,6 +32,9 @@ function Homepage() {
         setCaption("");
         setImage(null);
         setImagePreview(null);
+        setIsEditing(false);
+        getAllPosts();
+        toast.success("Image Uploaded Successfully");
       } else {
         console.log("Error creating post", response.status);
       }
@@ -71,20 +77,44 @@ function Homepage() {
     }
   };
 
+  function editUser() {
+    setIsEditing(true);
+  }
+
+  function closeEditUser() {
+    setIsEditing(false);
+  }
+
   useEffect(() => {
     getAllPosts();
   }, []);
 
   return (
     <div className="homepage-wrapper">
-      <Header />
+      <ToastContainer />
+      {isEditing && <div className="blurred"></div>}
+      {isEditing && (
+        <div className="is-editing">
+          <CreatePosts
+            caption={caption}
+            handleCaptionChange={handleCaptionChange}
+            handleImageChange={handleImageChange}
+            createPost={createPost}
+            imagePreview={imagePreview}
+          />
+          <div className="button-wrapper">
+            <button onClick={createPost}>Upload Image</button>
+            <button onClick={closeEditUser}>Cancel</button>
+          </div>
+        </div>
+      )}
+      <Header editUser={editUser} />
 
       <div>
         <Posts
           caption={caption}
           handleCaptionChange={handleCaptionChange}
           handleImageChange={handleImageChange}
-          createPost={createPost}
           imagePreview={imagePreview}
           setImagePreview={setImagePreview}
           posts={posts}

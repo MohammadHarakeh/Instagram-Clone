@@ -6,8 +6,9 @@ import { MdOutlineExplore } from "react-icons/md";
 import { CiHeart } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { RiAddBoxLine } from "react-icons/ri";
 
-function Header() {
+function Header({ editUser }) {
   const navigate = useNavigate();
 
   const logoutRedirect = () => {
@@ -39,6 +40,10 @@ function Header() {
 
         <span>
           <CiHeart />
+        </span>
+
+        <span>
+          <RiAddBoxLine className="add-post" onClick={editUser} />
         </span>
 
         <span>

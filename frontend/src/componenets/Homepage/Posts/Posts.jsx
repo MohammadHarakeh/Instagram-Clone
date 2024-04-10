@@ -14,39 +14,6 @@ function Posts({
 }) {
   return (
     <div className="posts-wrapper">
-      <div className="create-post-form">
-        <div className="post-inputs">
-          <input
-            type="file"
-            onChange={handleImageChange}
-            id="imageInput"
-            accept="image/*"
-            className="post-image-input"
-            required
-          />
-
-          <textarea
-            placeholder="Write a caption..."
-            value={caption}
-            onChange={handleCaptionChange}
-            required
-          ></textarea>
-
-          <label htmlFor="imageInput" className="image-input-label">
-            Choose Image
-          </label>
-        </div>
-        <button type="submit" className="submit-post-btn" onClick={createPost}>
-          Post
-        </button>
-
-        {imagePreview && (
-          <div className="image-preview">
-            <img src={imagePreview} alt="preview"></img>
-          </div>
-        )}
-      </div>
-
       {posts &&
         posts.map((post) => (
           <div className="posts-card" key={post.id}>
