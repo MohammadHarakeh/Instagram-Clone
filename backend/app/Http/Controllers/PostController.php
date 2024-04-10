@@ -41,7 +41,7 @@ class PostController extends Controller
 
     public function getAllPosts()
     {
-        $posts = Post::with('user')->orderBy('created_at', 'desc')->get();
+        $posts = Post::with(['user','likes'])->orderBy('created_at', 'desc')->get();
 
         return response()->json(['posts'=>$posts], 200);
     }

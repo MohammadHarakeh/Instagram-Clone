@@ -38,7 +38,7 @@ function Posts({
               </div>
               <div className="post-likes-caption">
                 <p>
-                  <b>{post.likes} likes</b>
+                  <b>{post.likes.length} likes</b>
                 </p>
                 <p>
                   <b>{post.user.name}</b> {post.caption}

@@ -32,3 +32,4 @@ Route::delete('/posts/delete/{id}', [PostController::class, 'deletePost']);
 
 
 Route::post('/toggleLike/post/{postId}', [LikesController::class, 'toggleLike']);
+Route::get('/like/count/{postId}', [LikesController::class, 'getPostLikes']);

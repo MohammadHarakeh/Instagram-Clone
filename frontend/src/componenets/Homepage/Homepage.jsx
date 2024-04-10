@@ -10,7 +10,7 @@ function Homepage() {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState();
   const [imagePreview, setImagePreview] = useState();
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
 
   const createPost = async () => {
@@ -121,14 +121,16 @@ function Homepage() {
       <Header editUser={editUser} />
 
       <div>
-        <Posts
-          caption={caption}
-          handleCaptionChange={handleCaptionChange}
-          handleImageChange={handleImageChange}
-          imagePreview={imagePreview}
-          setImagePreview={setImagePreview}
-          posts={posts}
-        />
+        {posts && (
+          <Posts
+            caption={caption}
+            handleCaptionChange={handleCaptionChange}
+            handleImageChange={handleImageChange}
+            imagePreview={imagePreview}
+            setImagePreview={setImagePreview}
+            posts={posts}
+          />
+        )}
         <Suggested />
       </div>
     </div>

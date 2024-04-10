@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Like;
+use App\Models\Post;
 
 class LikesController extends Controller
 {
@@ -25,6 +26,15 @@ class LikesController extends Controller
             $message = 'Post Liked successfully';
         }
         return response()->json(['message' => $message], 200);
+    }
+
+    public function getPostLikes($postId)
+    {
+        $post = Post::findOrFail($postId);
+
+        $likeCount = $post->likes()->count();
+
+        return response()->json(['likes'=>$likeCount], 200);
     }
 }
 
