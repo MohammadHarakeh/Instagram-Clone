@@ -28,6 +28,7 @@ function Suggested() {
         user.id === userId ? { ...user, isFollowing: !isFollowing } : user
       );
       setUsers(updatedUsers);
+      getAllUsers();
     } catch (error) {
       console.log("Error toggling follow:", error.message);
     }
@@ -71,8 +72,8 @@ function Suggested() {
           />
           <p>{user.name}</p>
           <div className="suggested-follow-btn">
-            <button onClick={() => toggleFollow(user.id, user.isFollowing)}>
-              {user.isFollowing ? "Unfollow" : "Follow"}
+            <button onClick={() => toggleFollow(user.id, user.is_followed)}>
+              {user.is_followed ? "Unfollow" : "Follow"}
             </button>
           </div>
         </div>
