@@ -8,12 +8,12 @@ import { IoIosLogOut } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { RiAddBoxLine } from "react-icons/ri";
 
-function Header({ editUser }) {
+function Header({ editUser, createPost }) {
   const navigate = useNavigate();
 
   const logoutRedirect = () => {
     localStorage.removeItem("token");
-    navigate("/auth");
+    navigate("/");
   };
 
   const homepageRedirect = () => {

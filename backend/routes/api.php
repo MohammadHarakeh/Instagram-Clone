@@ -22,7 +22,7 @@ Route::post('update-user', [UsersController::class, 'updateUser']);
 
 Route::get('/followers/count', [FollowController::class, 'followersCount']);
 Route::get('/following/count', [FollowController::class, 'followingCount']);
-Route::post('/follow/{userId}', [FollowController::class, 'follow']);
+Route::post('/toggleFollow/{userId}', [FollowController::class, 'toggleFollow']);
 Route::delete('/unfollow/{userId}', [FollowController::class, 'unfollow']);
 
 

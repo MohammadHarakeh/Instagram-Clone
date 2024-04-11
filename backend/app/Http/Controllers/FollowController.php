@@ -10,7 +10,7 @@ class FollowController extends Controller
 {
 
 
-    public function follow($userId)
+    public function toggleFollow($userId)
     {
         $user = auth()->user();
         $followedUser = User::findOrFail($userId);
@@ -20,7 +20,8 @@ class FollowController extends Controller
             $user->follows()->create(['following_id' => $userId]);
             return response()->json(['message' => 'Successfully followed user.']);
         } else {
-            return response()->json(['message' => 'You are already following this user.'], 400);
+            $user->follows()->where('following_id', $userId)->delete();
+            return response()->json(['message'=>'Successfully unfollowed user.']);
         }
     }
 

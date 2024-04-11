@@ -178,6 +178,7 @@ function Homepage() {
             handleImageChange={handleImageChange}
             createPost={createPost}
             imagePreview={imagePreview}
+            isEditing={isEditing}
           />
           <div className="button-wrapper">
             <button onClick={createPost}>Upload Image</button>

@@ -1,12 +1,7 @@
-@font-face {
-  font-family: "Fontspring-DEMO-proximanova-regular.otf";
-  src: url("../fonts/Fontspring-DEMO-proximanova-regular.otf")
-    format("opentype");
-}
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Fontspring-DEMO-proximanova-regular.otf";
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
