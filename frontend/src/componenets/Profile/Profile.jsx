@@ -15,6 +15,7 @@ function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [image, setImage] = useState();
   const [imageData, setImageData] = useState();
+  const [posts, setPosts] = useState([]);
 
   const getUserInfo = async () => {
     try {
@@ -243,11 +244,14 @@ function Profile() {
         </div>
       </div>
       <div className="personal-posts">
-        <img src={profileImage}></img>
-        <img src={profileImage}></img>
-        <img src={profileImage}></img>
-        <img src={profileImage}></img>
-        <img src={profileImage}></img>
+        {posts.map((post) => (
+          <div key={post.id}>
+            <img
+              src={`http://127.0.0.1:8000/post_images/${post.image}`}
+              alt={`post`}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );

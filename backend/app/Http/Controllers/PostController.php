@@ -43,20 +43,30 @@ class PostController extends Controller
 
     public function getAllPosts()
     {
-        $loggedInUserId = auth()->id();
+        $user = auth()->id();
     
-        $followedUserIds = Follow::where('follower_id', $loggedInUserId)->pluck('following_id');
+        $followedUserIds = Follow::where('follower_id', $user)->pluck('following_id');
     
         $posts = Post::whereIn('user_id', $followedUserIds)
         ->with(['user', 'likes'])
         ->orderBy('created_at', 'desc')
         ->get();
     
-    $posts->each(function ($post) use ($loggedInUserId) {
-        $post->liked_by_user = $post->likes->contains('user_id', $loggedInUserId);
+    $posts->each(function ($post) use ($user) {
+        $post->liked_by_user = $post->likes->contains('user_id', $user);
     });
     
     
+        return response()->json(['posts' => $posts], 200);
+    }
+
+
+    public function getLoggedUserPosts()
+    {
+        $user = auth()->id();
+
+        $posts = Post::where('user_id', $user)->orderBy('created_at', 'desc')->get(['image']);
+
         return response()->json(['posts' => $posts], 200);
     }
     

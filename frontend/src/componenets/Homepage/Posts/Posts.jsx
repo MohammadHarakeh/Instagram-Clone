@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./Posts.css";
-import UserProfile from "../../../assets/profile-picture.jpeg";
 import { FaRegComment, FaHeart, FaRegHeart } from "react-icons/fa";
 
 function Posts({ posts, handleToggleLike, handleAddComment, setComment }) {
   const [comments, setComments] = useState({});
+  const [showAllComments, setShowAllComments] = useState(false);
 
   const getComment = async (postId) => {
     try {
@@ -29,7 +29,6 @@ function Posts({ posts, handleToggleLike, handleAddComment, setComment }) {
         ...prevComments,
         [postId]: data.comments,
       }));
-      console.log(data);
     } catch (error) {
       console.log("Error fetching data:", error.message);
     }
@@ -40,6 +39,10 @@ function Posts({ posts, handleToggleLike, handleAddComment, setComment }) {
       getComment(post.id);
     });
   }, [posts]);
+
+  const handleToggleComments = () => {
+    setShowAllComments((prevShowAllComments) => !prevShowAllComments);
+  };
 
   return (
     <div className="posts-wrapper">
@@ -91,13 +94,20 @@ function Posts({ posts, handleToggleLike, handleAddComment, setComment }) {
               <div className="all-comments">
                 <h3>Comments:</h3>
                 {comments[post.id] &&
-                  comments[post.id].map((comment) => (
-                    <div key={comment.id} className="comment">
-                      <p>
-                        <b>{comment.user.name}</b>: {comment.comment_text}
-                      </p>
-                    </div>
-                  ))}
+                  comments[post.id]
+                    .slice(0, showAllComments ? undefined : 1)
+                    .map((comment) => (
+                      <div key={comment.id} className="comment">
+                        <p>
+                          <b>{comment.user.name}</b>: {comment.comment_text}
+                        </p>
+                      </div>
+                    ))}
+                {comments[post.id] && comments[post.id].length > 1 && (
+                  <button onClick={handleToggleComments}>
+                    {showAllComments ? "Show Less" : "Show More"}
+                  </button>
+                )}
               </div>
 
               <div className="comment-section">

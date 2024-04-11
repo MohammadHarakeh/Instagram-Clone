@@ -136,9 +136,9 @@ function Homepage() {
         console.log(`Failed to add post. Status: ${response.status}`);
       }
 
+      getAllPosts();
       console.log("Comment added successfully");
       toast.success("Comment added successfully");
-      setComment("");
     } catch (error) {
       console.log("Error fetching data:", error.message);
       toast.error("Failed to add comment. Please try again later.");
@@ -151,6 +151,7 @@ function Homepage() {
 
   const handleAddComment = (postId) => {
     addComment(postId);
+    setComment("");
   };
 
   function editUser() {
