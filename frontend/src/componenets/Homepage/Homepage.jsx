@@ -13,7 +13,6 @@ function Homepage() {
   const [posts, setPosts] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [comment, setComment] = useState("");
-  const [text, setText] = useState("");
 
   const createPost = async () => {
     try {
@@ -142,6 +141,7 @@ function Homepage() {
       setComment("");
     } catch (error) {
       console.log("Error fetching data:", error.message);
+      toast.error("Failed to add comment. Please try again later.");
     }
   };
 

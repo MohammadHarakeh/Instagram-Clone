@@ -1,9 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Posts.css";
 import UserProfile from "../../../assets/profile-picture.jpeg";
 import { FaRegComment, FaHeart, FaRegHeart } from "react-icons/fa";
 
 function Posts({ posts, handleToggleLike, handleAddComment, setComment }) {
+  const [comments, setComments] = useState({});
+
+  const getComment = async (postId) => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/get/comment/${postId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        console.log("Error getting comments");
+      }
+
+      const data = await response.json();
+      setComments((prevComments) => ({
+        ...prevComments,
+        [postId]: data.comments,
+      }));
+      console.log(data);
+    } catch (error) {
+      console.log("Error fetching data:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    posts.forEach((post) => {
+      getComment(post.id);
+    });
+  }, [posts]);
+
   return (
     <div className="posts-wrapper">
       {posts &&
@@ -50,6 +87,19 @@ function Posts({ posts, handleToggleLike, handleAddComment, setComment }) {
                   <b>{post.user.name}</b> {post.caption}
                 </p>
               </div>
+
+              <div className="all-comments">
+                <h3>Comments:</h3>
+                {comments[post.id] &&
+                  comments[post.id].map((comment) => (
+                    <div key={comment.id} className="comment">
+                      <p>
+                        <b>{comment.user.name}</b>: {comment.comment_text}
+                      </p>
+                    </div>
+                  ))}
+              </div>
+
               <div className="comment-section">
                 <textarea
                   placeholder="Add a comment..."
