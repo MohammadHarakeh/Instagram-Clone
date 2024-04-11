@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Suggested.css";
 import userProfile from "../../../assets/profile-picture.jpeg";
 
 function Suggested() {
   const [users, setUsers] = useState([]);
 
-  const toggleFollow = async (userId) => {
+  const toggleFollow = async (userId, isFollowing) => {
     try {
       const response = await fetch(
         `http://127.0.0.1:8000/api/toggleFollow/${userId}`,
@@ -21,50 +21,39 @@ function Suggested() {
 
       if (!response.ok) {
         console.log(`Error following user. Status: ${response.status}`);
+        return;
       }
 
-      const data = await response.json();
-      console.log(data);
+      const updatedUsers = users.map((user) =>
+        user.id === userId ? { ...user, isFollowing: !isFollowing } : user
+      );
+      setUsers(updatedUsers);
     } catch (error) {
       console.log("Error toggling follow:", error.message);
     }
   };
 
-  const getAllUsers = async () => {
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/get-all-users", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        console.log("Error getting all users. Status: ", response.status);
-      }
-
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.log("Error getting all users:", error.message);
-    }
-  };
-
-  useState(() => {
+  useEffect(() => {
     getAllUsers();
   }, []);
 
   return (
     <div className="suggested-wrapper">
       <p className="suggested">Suggested for you</p>
-      <div className="suggested-info">
-        <img src={userProfile}></img>
-        <p>Name</p>
-
-        <div className="suggested-follow-btn">
-          <button>Follow</button>
+      {users.map((user) => (
+        <div key={user.id} className="suggested-info">
+          <img
+            src={`http://127.0.0.1:8000/profile_pictures/${user.profile_picture}`}
+            alt="User Profile"
+          ></img>
+          <p>{user.name}</p>
+          <div className="suggested-follow-btn">
+            <button onClick={() => toggleFollow(user.id, user.isFollowing)}>
+              {user.isFollowing ? "Unfollow" : "Follow"}
+            </button>
+          </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 }

@@ -26,19 +26,6 @@ class FollowController extends Controller
     }
 
 
-    public function unfollow($userId)
-    {
-        $user = auth()->user();
-        $followedUser = User::findOrFail($userId);
-
-        if ($user->follows()->where('following_id', $userId)->exists()) {
-            $user->follows()->where('following_id', $userId)->delete();
-            return response()->json(['message' => 'Successfully unfollowed user.']);
-        } else {
-            return response()->json(['message' => 'You are not following this user.'], 400);
-        }
-    }
-
 
     public function followersCount()
     {
@@ -53,5 +40,6 @@ class FollowController extends Controller
         $followingCount = $user->following()->count();
         return response()->json(['following_count' => $followingCount]);
     }
+    
 
 }

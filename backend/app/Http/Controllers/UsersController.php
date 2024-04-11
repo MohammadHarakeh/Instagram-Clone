@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
+
 
 class UsersController extends Controller
 {
@@ -25,11 +27,31 @@ class UsersController extends Controller
         ], 200);
     }
 
-    public function getAllUsers(){
-        $users = User::all();
+    // public function getAllUsers(){
+    //     $users = User::all();
 
-        return response()->json(['users'=>$users], 200);
+    //     return response()->json(['users'=>$users], 200);
+    // }
+
+    public function getAllUsers(){
+        $authenticatedUser  = Auth::user();
+    
+        $users = User::where('id', '!=', $authenticatedUser->id)->get();
+    
+        $usersWithFollowStatus = $users->map(function ($user) use ($authenticatedUser){
+            $isFollowing = $authenticatedUser->following->contains('id', $user->id);
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'bio' => $user->bio,
+                'profile_picture' => $user->profile_picture,
+                'is_followed' => $isFollowing,
+            ];
+        });
+        return response()->json(['users' => $usersWithFollowStatus], 200);
     }
+    
     
 
     public function updateUser(Request $request){
