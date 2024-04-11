@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Suggested.css";
 import userProfile from "../../../assets/profile-picture.jpeg";
 
 function Suggested() {
+  const [users, setUsers] = useState([]);
+
   const toggleFollow = async (userId) => {
     try {
       const response = await fetch(
@@ -27,6 +29,30 @@ function Suggested() {
       console.log("Error toggling follow:", error.message);
     }
   };
+
+  const getAllUsers = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/get-all-users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        console.log("Error getting all users. Status: ", response.status);
+      }
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log("Error getting all users:", error.message);
+    }
+  };
+
+  useState(() => {
+    getAllUsers();
+  }, []);
 
   return (
     <div className="suggested-wrapper">

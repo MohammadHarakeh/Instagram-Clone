@@ -150,11 +150,13 @@ textarea {
 .choose-image-label {
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 2%;
   background-color: #0095f6;
   border-radius: 5px;
-  width: 10rem;
+  width: 11rem;
   font-size: 20px;
+  color: black;
 }
 
 .choose-image-label:hover {
