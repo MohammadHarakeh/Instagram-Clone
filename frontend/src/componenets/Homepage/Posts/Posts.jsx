@@ -52,6 +52,7 @@ function Posts({ posts, handleToggleLike }) {
               </div>
               <div className="comment-section">
                 <textarea placeholder="Add a comment..."></textarea>
+                <button>submit</button>
               </div>
             </div>
           </div>

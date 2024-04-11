@@ -65,15 +65,25 @@
 
 .comment-section {
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 0.5rem;
+  align-items: center;
 }
 
 .comment-section textarea {
   background-color: black;
   color: #fff;
   margin-top: 1rem;
-  width: 100%;
+  width: 80%;
   border: none;
   height: 100px;
   overflow: auto;
   resize: none;
+}
+
+.comment-section button {
+  width: 6rem;
+  height: 3rem;
+  margin-top: 1rem;
 }

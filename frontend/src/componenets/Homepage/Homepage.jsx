@@ -12,6 +12,7 @@ function Homepage() {
   const [imagePreview, setImagePreview] = useState();
   const [posts, setPosts] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
+  const [comment, setComment] = useState("");
 
   const createPost = async () => {
     try {
@@ -108,6 +109,35 @@ function Homepage() {
       }
 
       getAllPosts();
+    } catch (error) {
+      console.log("Error fetching data:", error.message);
+    }
+  };
+
+  const addComment = async (postId) => {
+    try {
+      const formData = new FormData();
+      formData.append("comment_text", comment);
+
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/add/comment/${postId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        console.log(`Failed to add post. Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log(data);
     } catch (error) {
       console.log("Error fetching data:", error.message);
     }
