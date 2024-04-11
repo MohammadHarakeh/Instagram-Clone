@@ -69,6 +69,7 @@
 }
 
 .personal-posts {
+  display: flex;
   margin: 1rem 27.8rem;
   flex-wrap: wrap;
   height: auto;

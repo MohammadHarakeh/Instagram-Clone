@@ -12,7 +12,7 @@ function Profile() {
   const [followers, setFollowers] = useState("");
   const [following, setFollowing] = useState("");
   const [postsCount, setPostsCount] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingProfile, setIsEditingProfile] = useState(false); // Renamed
   const [image, setImage] = useState();
   const [imageData, setImageData] = useState();
   const [posts, setPosts] = useState([]);
@@ -57,7 +57,7 @@ function Profile() {
       );
 
       if (!response.ok) {
-        throw new error(
+        throw new Error(
           `Failed to fetch user data. Status: ${response.status}`
         );
       }
@@ -84,7 +84,7 @@ function Profile() {
       );
 
       if (!response.ok) {
-        throw new error(
+        throw new Error(
           `Failed to fetch user data. Status: ${response.status}`
         );
       }
@@ -105,7 +105,7 @@ function Profile() {
         },
       });
       if (!response.ok) {
-        throw new error(
+        throw new Error(
           `Failed to fetch posts count. Status: ${response.status}`
         );
       }
@@ -140,9 +140,33 @@ function Profile() {
       setUserInfo(responseData.user);
       getUserInfo();
       toast.success("Updated successfully.");
-      setIsEditing(false);
+      setIsEditingProfile(false);
     } catch (error) {
       console.log("Error updating user:", error.message);
+    }
+  };
+
+  const getUserPosts = async () => {
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/posts/getUserPost",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        console.log(`Failed to fetch user posts. Status: ${response.status}`);
+      }
+      const data = await response.json();
+      setPosts(data.posts);
+    } catch (error) {
+      console.log("Error fetching data:", error.message);
     }
   };
 
@@ -156,12 +180,12 @@ function Profile() {
     };
   };
 
-  function editUser() {
-    setIsEditing(true);
+  function editUserProfile() {
+    setIsEditingProfile(true);
   }
 
   function closeEditUser() {
-    setIsEditing(false);
+    setIsEditingProfile(false);
   }
 
   useEffect(() => {
@@ -169,16 +193,17 @@ function Profile() {
     getUserfollowers();
     getUserFollowing();
     getPostCount();
+    getUserPosts();
   }, []);
 
   return (
     <div className="main-wrapper">
-      <Header></Header>
+      <Header editUserProfile={editUserProfile}></Header>
       <ToastContainer />
 
       <div className="profile-wrapper">
-        {isEditing && <div className="blurred"></div>}
-        {isEditing && (
+        {isEditingProfile && <div className="blurred"></div>}
+        {isEditingProfile && (
           <div className="is-editing">
             {image && <img src={`${image}`} alt="User" />}
             <label htmlFor="choose-image" className="choose-image-label">
@@ -223,7 +248,7 @@ function Profile() {
         <div className="profile-container">
           <div className="profile-name-follow">
             <p>{userInfo ? userInfo.name : "Loading..."}</p>
-            <button onClick={editUser}>Edit Profile</button>
+            <button onClick={editUserProfile}>Edit Profile</button>
           </div>
 
           <div className="personal-counters">

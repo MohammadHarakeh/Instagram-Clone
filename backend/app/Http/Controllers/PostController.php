@@ -20,8 +20,8 @@ class PostController extends Controller
     public function createPost(Request $request)
     {
         $request->validate([
-            'image'=>'required|image|mimes:jpeg,png,j|max:2048',
-            'caption'=>'required|string|max:255',
+            'image'=>'required|image|mimes:jpeg,png,jpg|max:2048',
+            'caption'=>'string|max:255',
         ]);
 
         $user = auth()->user();
