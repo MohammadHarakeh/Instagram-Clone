@@ -13,6 +13,7 @@ function Homepage() {
   const [posts, setPosts] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [comment, setComment] = useState("");
+  const [text, setText] = useState("");
 
   const createPost = async () => {
     try {
@@ -136,8 +137,9 @@ function Homepage() {
         console.log(`Failed to add post. Status: ${response.status}`);
       }
 
-      const data = await response.json();
-      console.log(data);
+      console.log("Comment added successfully");
+      toast.success("Comment added successfully");
+      setComment("");
     } catch (error) {
       console.log("Error fetching data:", error.message);
     }
@@ -145,6 +147,10 @@ function Homepage() {
 
   const handleToggleLike = (postId) => {
     toggleLike(postId);
+  };
+
+  const handleAddComment = (postId) => {
+    addComment(postId);
   };
 
   function editUser() {
@@ -191,6 +197,8 @@ function Homepage() {
             posts={posts}
             toggleLike={toggleLike}
             handleToggleLike={handleToggleLike}
+            handleAddComment={handleAddComment}
+            setComment={setComment}
           />
         )}
         <Suggested />

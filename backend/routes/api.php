@@ -37,3 +37,4 @@ Route::get('/like/count/{postId}', [LikesController::class, 'getPostLikes']);
 
 
 Route::post('/add/comment/{postId}', [CommentsController::class, 'addComment']);
+Route::get('/get/comment/{postId}', [CommentsController::class, 'getComments']);

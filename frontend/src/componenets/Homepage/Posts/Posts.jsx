@@ -3,7 +3,7 @@ import "./Posts.css";
 import UserProfile from "../../../assets/profile-picture.jpeg";
 import { FaRegComment, FaHeart, FaRegHeart } from "react-icons/fa";
 
-function Posts({ posts, handleToggleLike }) {
+function Posts({ posts, handleToggleLike, handleAddComment, setComment }) {
   return (
     <div className="posts-wrapper">
       {posts &&
@@ -51,8 +51,15 @@ function Posts({ posts, handleToggleLike }) {
                 </p>
               </div>
               <div className="comment-section">
-                <textarea placeholder="Add a comment..."></textarea>
-                <button>submit</button>
+                <textarea
+                  placeholder="Add a comment..."
+                  onChange={(e) => {
+                    setComment(e.target.value);
+                  }}
+                ></textarea>
+                <button onClick={() => handleAddComment(post.id)}>
+                  submit
+                </button>
               </div>
             </div>
           </div>

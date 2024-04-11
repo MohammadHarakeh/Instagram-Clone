@@ -27,4 +27,14 @@ class CommentsController extends Controller
 
         return response()->json(['message' => 'Comment added successfully', 'comment' => $comment ], 201);
     }
+
+
+    public function getComments($postId)
+    {
+        $post = Post::findOrFail($postId);
+
+        $comments = $post->comments()->with('user')->get();
+
+        return response()->json(['comments' => $comments], 200);
+    }
 }
