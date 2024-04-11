@@ -33,6 +33,29 @@ function Suggested() {
     }
   };
 
+  const getAllUsers = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/get-all-users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        },
+      });
+
+      if (!response.ok) {
+        console.error("Error getting all users. Status: ", response.status);
+        return;
+      }
+
+      const data = await response.json();
+      setUsers(data.users);
+      console.log(data);
+    } catch (error) {
+      console.error("Error getting all users:", error.message);
+    }
+  };
+
   useEffect(() => {
     getAllUsers();
   }, []);
@@ -45,7 +68,7 @@ function Suggested() {
           <img
             src={`http://127.0.0.1:8000/profile_pictures/${user.profile_picture}`}
             alt="User Profile"
-          ></img>
+          />
           <p>{user.name}</p>
           <div className="suggested-follow-btn">
             <button onClick={() => toggleFollow(user.id, user.isFollowing)}>
